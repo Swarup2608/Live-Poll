@@ -1,0 +1,461 @@
+/*
+  Loopballot design tokens.
+  Extracted verbatim from the THEMES registry in
+  "Loopballot Event Builder.dc.html" (the in-app Appearance switcher).
+  Import after globals.css, e.g. `import "./theme.css"` in layout.tsx.
+
+  10 themes: light, dark, midnight, professional, disco, shootout, sea,
+  grayscale, sunset, forest.
+
+  Switch at runtime by setting `data-theme` on <html> or <body>:
+    document.documentElement.dataset.theme = "disco";
+  With no data-theme set, the OS preference picks light or dark.
+*/
+
+/* ============ Shared tokens (not part of the THEMES map) ============ */
+:root {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-sm: 9px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-pill: 100px;
+}
+
+/* ============ light ============ */
+:root,
+[data-theme="light"] {
+  --lb-bg: #f0f1f9;
+  --lb-surface: white;
+  --lb-border: #dfe1e8;
+  --lb-text: #13151f;
+  --lb-text-muted: #60636f;
+  --lb-accent: #3d3fbb;
+  --lb-accent-soft: #e3eaff;
+  --lb-grad1: #555de3;
+  --lb-grad2: #b24dc8;
+  --lb-shadow: 0 4px 20px #292d3d14;
+}
+
+/* ============ dark ============ */
+[data-theme="dark"] {
+  --lb-bg: #0b0d16;
+  --lb-surface: #151822;
+  --lb-border: #2b2d38;
+  --lb-text: #eceef5;
+  --lb-text-muted: #8b8e9c;
+  --lb-accent: #8798ff;
+  --lb-accent-soft: #21265f;
+  --lb-grad1: #555de3;
+  --lb-grad2: #b24dc8;
+  --lb-shadow: 0 8px 24px #00000073;
+}
+
+/* Follow OS preference when no data-theme is set explicitly */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --lb-bg: #0b0d16;
+    --lb-surface: #151822;
+    --lb-border: #2b2d38;
+    --lb-text: #eceef5;
+    --lb-text-muted: #8b8e9c;
+    --lb-accent: #8798ff;
+    --lb-accent-soft: #21265f;
+    --lb-grad1: #555de3;
+    --lb-grad2: #b24dc8;
+    --lb-shadow: 0 8px 24px #00000073;
+  }
+}
+
+/* ============ midnight ============ */
+[data-theme="midnight"] {
+  --lb-bg: #040817;
+  --lb-surface: #0b1326;
+  --lb-border: #1e2638;
+  --lb-text: #e1e8f6;
+  --lb-text-muted: #7d8699;
+  --lb-accent: #00c5ee;
+  --lb-accent-soft: #003044;
+  --lb-grad1: #0089d0;
+  --lb-grad2: #7d7ff3;
+  --lb-shadow: 0 8px 28px #00000080;
+}
+
+/* ============ professional ============ */
+[data-theme="professional"] {
+  --lb-bg: #f4f5f6;
+  --lb-surface: white;
+  --lb-border: #d9dbdd;
+  --lb-text: #191b1d;
+  --lb-text-muted: #616367;
+  --lb-accent: #2e4a67;
+  --lb-accent-soft: #e1e9f2;
+  --lb-grad1: #334a62;
+  --lb-grad2: #45697a;
+  --lb-shadow: 0 2px 12px #2b2e3314;
+}
+
+/* ============ disco ============ */
+[data-theme="disco"] {
+  --lb-bg: #07040f;
+  --lb-surface: #150b24;
+  --lb-border: #34234f;
+  --lb-text: #f7f2ff;
+  --lb-text-muted: #b2a7ca;
+  --lb-accent: #f25dea;
+  --lb-accent-soft: #5b0058;
+  --lb-grad1: #f25dea;
+  --lb-grad2: #e9ae00;
+  --lb-shadow: 0 8px 30px #be47b859;
+}
+
+/* ============ shootout ============ */
+[data-theme="shootout"] {
+  --lb-bg: #050302;
+  --lb-surface: #150a08;
+  --lb-border: #362320;
+  --lb-text: #f8efee;
+  --lb-text-muted: #9b8b88;
+  --lb-accent: #df202e;
+  --lb-accent-soft: #590001;
+  --lb-grad1: #df202e;
+  --lb-grad2: #8d0000;
+  --lb-shadow: 0 8px 26px #bb061e59;
+}
+
+/* ============ sea ============ */
+[data-theme="sea"] {
+  --lb-bg: #e0f3f4;
+  --lb-surface: white;
+  --lb-border: #b8d4d5;
+  --lb-text: #04191f;
+  --lb-text-muted: #50686d;
+  --lb-accent: #008892;
+  --lb-accent-soft: #bfeff2;
+  --lb-grad1: #0097a1;
+  --lb-grad2: #24a684;
+  --lb-shadow: 0 4px 20px #0235381a;
+}
+
+/* ============ grayscale ============ */
+[data-theme="grayscale"] {
+  --lb-bg: #f2f2f2;
+  --lb-surface: white;
+  --lb-border: #d7d7d7;
+  --lb-text: #121212;
+  --lb-text-muted: #636363;
+  --lb-accent: #3a3a3a;
+  --lb-accent-soft: #dedede;
+  --lb-grad1: #484848;
+  --lb-grad2: #808080;
+  --lb-shadow: 0 4px 20px #00000014;
+}
+
+/* ============ sunset ============ */
+[data-theme="sunset"] {
+  --lb-bg: #fef2ec;
+  --lb-surface: white;
+  --lb-border: #e9d2c6;
+  --lb-text: #2e1d17;
+  --lb-text-muted: #826c65;
+  --lb-accent: #df500c;
+  --lb-accent-soft: #ffddc5;
+  --lb-grad1: #f9601f;
+  --lb-grad2: #df539f;
+  --lb-shadow: 0 4px 20px #924d3526;
+}
+
+/* ============ forest ============ */
+[data-theme="forest"] {
+  --lb-bg: #edf4eb;
+  --lb-surface: white;
+  --lb-border: #c7d6c4;
+  --lb-text: #131e11;
+  --lb-text-muted: #5a6857;
+  --lb-accent: #146720;
+  --lb-accent-soft: #d4edce;
+  --lb-grad1: #1e7729;
+  --lb-grad2: #827200;
+  --lb-shadow: 0 4px 20px #20341b1a;
+}
+
+/* ---- Keyframes (from Event Builder's Appearance panel) ---- */
+@keyframes lb-genie {
+  0% {
+    transform: scale(0.2) translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---- Base element theming ---- */
+body {
+  background: var(--lb-bg);
+  color: var(--lb-text);
+  font-family: var(--font-body);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: var(--lb-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* ---- Reusable component classes (mirroring the Event Builder markup) ---- */
+.lb-surface {
+  background: var(--lb-surface);
+  border: 1px solid var(--lb-border);
+  box-shadow: var(--lb-shadow);
+}
+
+.lb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: var(--lb-accent);
+  box-shadow: 0 8px 20px var(--lb-accent-soft);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.lb-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lb-text);
+  border: 1.5px solid var(--lb-border);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.lb-gradient-dot {
+  background: linear-gradient(135deg, var(--lb-grad1), var(--lb-grad2));
+}
+
+.lb-tip {
+  background: var(--lb-accent-soft);
+  border-radius: var(--radius-xl);
+}
+
+.lb-tip-title {
+  color: var(--lb-accent);
+}
+
+/* ============ Landing page ============ */
+@keyframes lb-float-a {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, -22px, 0) rotate(6deg);
+  }
+}
+
+@keyframes lb-float-b {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, 18px, 0) rotate(-8deg);
+  }
+}
+
+@keyframes lb-bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.lb-anim-float-a {
+  animation: lb-float-a 7s ease-in-out infinite;
+}
+
+.lb-anim-float-b {
+  animation: lb-float-b 8s ease-in-out infinite;
+}
+
+.lb-anim-bar-grow {
+  animation: lb-bar-grow 1.2s ease-out backwards;
+}
+
+.lb-mock-stage {
+  transform-style: preserve-3d;
+}
+
+.lb-mock-hitbox {
+  width: min(891px, 100%);
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+.lb-mock {
+  --lb-mock-slide-x: 0px;
+  --lb-mock-slide-y: 0px;
+  --lb-mock-rotate-x: 6deg;
+  --lb-mock-rotate-y: -5deg;
+  width: 100%;
+  transform: translate3d(var(--lb-mock-slide-x), var(--lb-mock-slide-y), 0) rotateX(var(--lb-mock-rotate-x)) rotateY(var(--lb-mock-rotate-y));
+  transform-style: preserve-3d;
+  transition: transform 180ms ease, filter 180ms ease;
+  will-change: transform;
+}
+
+.lb-mock-hitbox:hover .lb-mock {
+  filter: drop-shadow(0 28px 42px color-mix(in srgb, var(--lb-accent) 18%, transparent));
+}
+
+.lb-mock-grid {
+  transform: translateZ(0);
+  transition: transform 180ms ease;
+  will-change: transform;
+}
+
+.lb-mock-hitbox:hover .lb-mock-grid {
+  transform: translateZ(22px);
+}
+
+.lb-mock-poll-panel,
+.lb-mock-qa-panel {
+  transform-style: preserve-3d;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.lb-mock-poll-panel {
+  transform: translateZ(0);
+}
+
+.lb-mock-qa-panel {
+  transform: translateZ(0);
+}
+
+.lb-mock-hitbox:hover .lb-mock-poll-panel {
+  transform: translateZ(24px);
+}
+
+.lb-mock-hitbox:hover .lb-mock-qa-panel {
+  transform: translateZ(38px);
+}
+
+@media (max-width: 900px) {
+  .lb-nav-links {
+    display: none !important;
+  }
+
+  .lb-hero-title {
+    font-size: 38px !important;
+  }
+
+  .lb-hero-sub {
+    font-size: 16px !important;
+    max-width: 100% !important;
+  }
+
+  .lb-hero-pad {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .lb-mock-hitbox {
+    width: 92% !important;
+  }
+
+  .lb-mock {
+    transform: none !important;
+  }
+
+  .lb-mock-grid,
+  .lb-mock-poll-panel,
+  .lb-mock-qa-panel,
+  .lb-mock-hitbox:hover .lb-mock-grid,
+  .lb-mock-hitbox:hover .lb-mock-poll-panel,
+  .lb-mock-hitbox:hover .lb-mock-qa-panel {
+    transform: none !important;
+  }
+
+  .lb-mock-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lb-features {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .lb-logos {
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+  }
+
+  .lb-cta {
+    padding: 40px 28px !important;
+    margin-left: 24px !important;
+    margin-right: 24px !important;
+  }
+
+  .lb-footer {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .lb-hero-title {
+    font-size: 30px !important;
+  }
+
+  .lb-features {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lb-hero-actions a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .lb-hero-actions {
+    flex-direction: column !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .lb-mock,
+  .lb-mock-grid,
+  .lb-mock-poll-panel,
+  .lb-mock-qa-panel {
+    transition: none;
+  }
+}
+
+/* ============ Auth page ============ */
+@media (max-width: 980px) {
+  .auth-right {
+    display: none !important;
+  }
+
+  .auth-left {
+    max-width: 100% !important;
+  }
+}
