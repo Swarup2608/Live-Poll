@@ -22,6 +22,7 @@ export default function Navbar() {
         <a href="#">Product</a>
         <a href="#">Use cases</a>
         <a href="#">Pricing</a>
+        <a href="/all-pages">All pages</a>
         <a href="#">Resources</a>
       </div>
       <div className="flex items-center gap-3.5">
