@@ -166,8 +166,9 @@ export default function LoginPage() {
           </a>
 
           <p className="mt-9 text-center text-[13px] text-[var(--lb-text-muted)]">
-            By continuing you agree to loopballot&apos;s <a href="#">Terms</a>{" "}
-            &amp; <a href="#">Privacy Policy</a>.
+            By continuing you agree to loopballot&apos;s{" "}
+            <a href="/privacy">Terms</a> &amp;{" "}
+            <a href="/privacy">Privacy Policy</a>.
           </p>
         </div>
 
@@ -178,7 +179,7 @@ export default function LoginPage() {
         ref={heroRef}
         onPointerMove={handleHeroMouseMove}
         onPointerLeave={handleHeroMouseLeave}
-        className="auth-right relative hidden h-screen cursor-none overflow-hidden lg:block lg:flex-1"
+        className="auth-right relative hidden h-screen cursor-none overflow-hidden lg:block lg:flex-1 !fixed w-[65%] h-100 right-0 top-0 bottom-0"
       >
         {/* Base photo — dark concert crowd */}
         <div className="absolute inset-0">

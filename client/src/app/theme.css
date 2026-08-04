@@ -194,21 +194,26 @@
   }
 }
 
-/* ---- Base element theming ---- */
-body {
-  background: var(--lb-bg);
-  color: var(--lb-text);
-  font-family: var(--font-body);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
+/* ---- Base element theming ----
+   Wrapped in @layer base so Tailwind utility classes (e.g. text-white on
+   an <a>) can still override these defaults — unlayered CSS otherwise
+   beats every Tailwind layer regardless of selector specificity. */
+@layer base {
+  body {
+    background: var(--lb-bg);
+    color: var(--lb-text);
+    font-family: var(--font-body);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
 
-a {
-  color: var(--lb-accent);
-  text-decoration: none;
-}
+  a {
+    color: var(--lb-accent);
+    text-decoration: none;
+  }
 
-a:hover {
-  opacity: 0.8;
+  a:hover {
+    opacity: 0.8;
+  }
 }
 
 /* ---- Reusable component classes (mirroring the Event Builder markup) ---- */
@@ -297,6 +302,39 @@ a:hover {
 
 .lb-anim-bar-grow {
   animation: lb-bar-grow 1.2s ease-out backwards;
+}
+
+@keyframes lb-bar-grow-x {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes lb-check-pop {
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.lb-anim-bar-grow-x {
+  transform-origin: left;
+  animation: lb-bar-grow-x 0.8s ease-out backwards;
+}
+
+.lb-anim-check-pop {
+  animation: lb-check-pop 0.5s ease-out;
 }
 
 .lb-mock-stage {
