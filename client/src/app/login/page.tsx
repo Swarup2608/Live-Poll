@@ -1,7 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useRouter } from "next/navigation";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type PointerEvent,
+} from "react";
+import { apiFetch, googleAuthUrl } from "@/lib/api";
+import { setAccessToken } from "@/lib/authToken";
 
 type AuthTab = "login" | "signup";
 
@@ -9,12 +18,49 @@ const inputClass =
   "w-full rounded-[10px] border border-[var(--lb-border)] bg-[var(--lb-surface)] px-[14px] py-[13px] text-[15px] text-[var(--lb-text)] outline-none placeholder:text-[var(--lb-text-muted)] focus:border-[var(--lb-accent)]";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [tab, setTab] = useState<AuthTab>("login");
   const [isHoveringHero, setIsHoveringHero] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
   const isLogin = tab === "login";
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const path = isLogin ? "/auth/login" : "/auth/signup";
+      const body = isLogin
+        ? { email, password }
+        : { name, email, password, orgName: `${name}'s workspace` };
+
+      const res = await apiFetch(path, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error ?? "Something went wrong. Please try again.");
+        return;
+      }
+
+      setAccessToken(data.accessToken);
+      router.push("/dashboard");
+    } catch {
+      setError("Couldn't reach the server. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (!heroRef.current) {
@@ -84,7 +130,10 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <form className="flex flex-col gap-4 min-h-[280px]">
+          <form
+            className="flex flex-col gap-4 min-h-[280px]"
+            onSubmit={handleSubmit}
+          >
             {!isLogin && (
               <label className="block">
                 <span className="mb-1.5 block text-[13px] font-semibold text-[var(--lb-text)]">
@@ -94,6 +143,9 @@ export default function LoginPage() {
                   type="text"
                   placeholder="Ada Lovelace"
                   className={inputClass}
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  required
                 />
               </label>
             )}
@@ -108,6 +160,9 @@ export default function LoginPage() {
                 type="email"
                 placeholder="you@company.com"
                 className={inputClass}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
               />
             </label>
 
@@ -118,7 +173,7 @@ export default function LoginPage() {
                 </span>
                 {isLogin && (
                   <a
-                    href="#"
+                    href="/forgot-password"
                     className="text-[13px] font-semibold text-[var(--lb-accent)] hover:opacity-80"
                   >
                     Forgot?
@@ -130,6 +185,10 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className={inputClass}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  minLength={8}
+                  required
                 />
                 <button
                   type="button"
@@ -141,11 +200,24 @@ export default function LoginPage() {
               </div>
             </label>
 
+            {error && (
+              <p className="text-[13px] font-semibold text-red-500">
+                {error}
+              </p>
+            )}
+
             <button
               type="submit"
-              className="mt-2 rounded-[10px] bg-[var(--lb-accent)] px-4 py-[14px] text-[15px] font-semibold text-white shadow-[0_8px_20px_var(--lb-accent-soft)] transition hover:brightness-105"
+              disabled={loading}
+              className="mt-2 rounded-[10px] bg-[var(--lb-accent)] px-4 py-[14px] text-[15px] font-semibold text-white shadow-[0_8px_20px_var(--lb-accent-soft)] transition hover:brightness-105 disabled:opacity-60"
             >
-              {isLogin ? "Log in" : "Create account"}
+              {loading
+                ? isLogin
+                  ? "Logging in…"
+                  : "Creating account…"
+                : isLogin
+                  ? "Log in"
+                  : "Create account"}
             </button>
           </form>
 
@@ -158,7 +230,7 @@ export default function LoginPage() {
           </div>
 
           <a
-            href="#"
+            href={googleAuthUrl()}
             className="flex items-center justify-center gap-2.5 rounded-[10px] border border-[var(--lb-border)] px-4 py-[13px] text-[15px] font-semibold text-[var(--lb-text)]"
           >
             <div className="h-[18px] w-[18px] rounded bg-[conic-gradient(oklch(0.6_0.19_260),oklch(0.6_0.19_30),oklch(0.6_0.19_140),oklch(0.6_0.19_260))]" />

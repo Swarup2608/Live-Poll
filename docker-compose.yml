@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: loopballot
+      POSTGRES_PASSWORD: loopballot
+      POSTGRES_DB: loopballot
+    ports:
+      - "5432:5432"
+    volumes:
+      - loopballot_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  loopballot_postgres_data:
